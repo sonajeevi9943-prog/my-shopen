@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- This tells the browser what type of file this is -->
+    <meta charset="UTF-8" />
+    <!-- This makes the website look good on mobile phones -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyShop - Online Store</title>
+
+    <!-- Google Font - makes text look nicer -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ===========================
+         BASIC RESET
+         Removes default spacing
+      =========================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* ===========================
+         TOP BAR (announcement)
+      =========================== */
+      .top-bar {
+        background-color: #222;
+        color: white;
+        text-align: center;
+        padding: 8px;
+        font-size: 13px;
+      }
+
+      /* ===========================
+         NAVBAR (navigation bar)
+      =========================== */
+      .navbar {
+        background-color: white;
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      /* Website logo/name */
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #e44d26;
+      }
+
+      /* Navigation links */
+      .nav-links {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-size: 14px;
+        color: #555;
+        font-weight: 600;
+      }
+
+      .nav-links a:hover {
+        color: #e44d26;
+      }
+
+      /* Cart button in navbar */
+      .cart-btn {
+        background: linear-gradient(#ff8b6e, #fb87b2);
+        color: white;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-family: "Poppins", sans-serif;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .cart-btn:hover {
+        background-color: #c0392b;
+      }
+
+      /* ===========================
+         HERO SECTION (big banner)
+      =========================== */
+      .hero {
+        background: linear-gradient(135deg, #e44d26, #f39c12);
+        color: white;
+        text-align: center;
+        padding: 80px 20px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+        margin-bottom: 12px;
+      }
+
+      .hero p {
+        font-size: 16px;
+        margin-bottom: 28px;
+        opacity: 0.9;
+      }
+
+      .hero-btn {
+        background: white;
+        color: #e44d26;
+        padding: 12px 32px;
+        border-radius: 25px;
+        font-size: 15px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .hero-btn:hover {
+        background: #f5f5f5;
+      }
+
+      /* ===========================
+         SECTION HEADING
+      =========================== */
+      .section-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 700;
+        margin: 40px 0 20px;
+        color: #222;
+      }
+
+      /* ===========================
+         CATEGORIES ROW
+      =========================== */
+      .categories {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 0 40px 30px;
+        flex-wrap: wrap;
+      }
+
+      .category-card {
+        background: white;
+        border: 2px solid #eee;
+        border-radius: 12px;
+        padding: 16px 24px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s;
+        min-width: 100px;
+      }
+      .category-card-img {
+        width: 65px;
+        height: 65px;
+        display: block;
+        object-fit: cover;
+        border-radius: 12px;
+        margin: 0 auto 8px;
+      }
+
+      .category-card:hover,
+      .category-card.active {
+        border-color: #e44d26;
+        background: #fff5f3;
+        color: #e44d26;
+      }
+
+      .category-card .cat-icon {
+        font-size: 26px;
+        margin-bottom: 6px;
+      }
+
+      /* ===========================
+         PRODUCTS GRID
+      =========================== */
+      .products-section {
+        padding: 0 40px 50px;
+      }
+
+      /* CSS Grid = puts cards in rows automatically */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+        gap: 20px;
+      }
+
+      /* Each product card */
+      .product-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Product image area */
+      .product-img {
+        background: #f9f9f9;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 60px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      /* Product details below image */
+      .product-info {
+        padding: 14px;
+      }
+
+      .product-name {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #222;
+      }
+
+      .product-price {
+        font-size: 18px;
+        font-weight: 700;
+        color: #e44d26;
+        margin-bottom: 10px;
+      }
+
+      .old-price {
+        font-size: 12px;
+        color: #999;
+        text-decoration: line-through;
+        margin-left: 5px;
+      }
+
+      /* Add to cart button */
+      .add-btn {
+        width: 100%;
+        padding: 9px;
+        background: linear-gradient(#ff7553, #ff6fb9);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        transition: background 0.2s;
+      }
+
+      .add-btn:hover {
+        background: linear-gradient(#ff7553, #ff6fb9);
+      }
+
+      /* ===========================
+         OFFER BANNER
+      =========================== */
+      .offer-banner {
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        color: white;
+        margin: 0 40px 40px;
+        border-radius: 16px;
+        padding: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .offer-text h2 {
+        font-size: 26px;
+        margin-bottom: 8px;
+      }
+
+      .offer-text p {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .offer-btn {
+        background: #e44d26;
+        color: white;
+        padding: 12px 28px;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* ===========================
+         FEATURES SECTION
+         (Free shipping, returns etc.)
+      =========================== */
+      .features {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 30px 40px;
+        background: white;
+        flex-wrap: wrap;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+      }
+
+      .feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+      }
+
+      .feature-icon {
+        font-size: 28px;
+      }
+
+      .feature-title {
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .feature-desc {
+        color: #777;
+        font-size: 12px;
+      }
+
+      /* ===========================
+         FOOTER
+      =========================== */
+      footer {
+        background: #222;
+        color: #bbb;
+        text-align: center;
+        padding: 30px 20px;
+        font-size: 13px;
+        margin-top: 20px;
+      }
+
+      footer span {
+        color: #e44d26;
+        font-weight: 700;
+      }
+
+      /* ===========================
+         CART POPUP (sidebar)
+      =========================== */
+      .cart-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 200;
+      }
+
+      .cart-overlay.show {
+        display: block;
+      }
+
+      .cart-panel {
+        position: fixed;
+        top: 0;
+        right: -400px; /* hidden by default */
+        width: 360px;
+        height: 100%;
+        background: white;
+        z-index: 201;
+        display: flex;
+        flex-direction: column;
+        transition: right 0.3s;
+      }
+
+      .cart-panel.show {
+        right: 0; /* slides in */
+      }
+
+      .cart-head {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-head h3 {
+        font-size: 18px;
+      }
+
+      .close-btn {
+        font-size: 20px;
+        cursor: pointer;
+        background: #f0f0f0;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+
+      .cart-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+
+      .cart-item {
+        display: flex;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .cart-item-img {
+        font-size: 36px;
+        width: 55px;
+        height: 55px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cart-item-name {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .cart-item-price {
+        font-size: 14px;
+        font-weight: 700;
+        color: #e44d26;
+      }
+
+      .cart-empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: #aaa;
+        font-size: 14px;
+      }
+
+      .cart-empty .empty-icon {
+        font-size: 50px;
+        margin-bottom: 10px;
+      }
+
+      .cart-foot {
+        padding: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      .cart-total-row {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        padding: 13px;
+        background: #e44d26;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .checkout-btn:hover {
+        background: #c0392b;
+      }
+
+      /* ===========================
+         TOAST NOTIFICATION
+         (small popup at bottom)
+      =========================== */
+      .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: #222;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 13px;
+        font-weight: 600;
+        z-index: 999;
+        transition: transform 0.3s;
+        white-space: nowrap;
+      }
+
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* ===========================
+         RESPONSIVE (mobile phones)
+      =========================== */
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 12px 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero h1 {
+          font-size: 28px;
+        }
+        .products-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .products-section {
+          padding: 0 15px 40px;
+        }
+        .categories {
+          padding: 0 15px 20px;
+        }
+        .offer-banner {
+          margin: 0 15px 30px;
+        }
+        .features {
+          padding: 20px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ======= TOP BAR ======= -->
+    <div class="top-bar">
+      🎉 Free delivery on orders above ₹499! Use code <b>WELCOME10</b> for 10%
+      off
+    </div>
+
+    <!-- ======= NAVBAR ======= -->
+    <nav class="navbar">
+      <!-- Logo -->
+      <div class="logo">MyShop 🛍️</div>
+
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Deals</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+
+      <!-- Cart Button -->
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Cart (<span id="cart-count">0</span>)
+      </button>
+    </nav>
+
+    <!-- ======= HERO SECTION ======= -->
+    <section class="hero">
+      <h1>🛍️ Welcome to MyShop!</h1>
+      <p>Find the best products at the best prices — simple, fast and easy</p>
+      <button
+        class="hero-btn"
+        onclick="
+          document
+            .getElementById('products')
+            .scrollIntoView({ behavior: 'smooth' })
+        "
+      >
+        Shop Now →
+      </button>
+    </section>
+
+    <!-- ======= CATEGORIES ======= -->
+    <h2 class="section-title">Shop by Category</h2>
+
+    <div class="categories">
+      <div class="category-card active" onclick="filterProducts('all', this)">
+        <div class="cat-icon">🏪</div>
+        All
+      </div>
+      <div class="category-card" onclick="filterProducts('electronics', this)">
+        <img src="hp.jpg" alt="📱" class="category-card-img" />
+        Electronics
+      </div>
+      <div class="category-card" onclick="filterProducts('fashion', this)">
+        <img src="pic.jpg" alt="👗" class="category-card-img" />
+        Fashion
+      </div>
+      <div class="category-card" onclick="filterProducts('home', this)">
+        <img
+          src="Consumer-Electronics-products.jpg"
+          alt="🏠"
+          class="category-card-img"
+        />
+        Home
+      </div>
+      <div class="category-card" onclick="filterProducts('food', this)">
+        <img src="pizza.jpg" alt="🍕" class="category-card-img" />
+        Food
+      </div>
+    </div>
+
+    <!-- ======= PRODUCTS SECTION ======= -->
+    <section class="products-section" id="products">
+      <h2 class="section-title">Our Products</h2>
+
+      <!-- Products will be shown here by JavaScript -->
+      <div class="products-grid" id="products-grid">
+        <!-- JavaScript adds product cards here -->
+      </div>
+    </section>
+
+    <!-- ======= OFFER BANNER ======= -->
+    <div class="offer-banner">
+      <div class="offer-text">
+        <h2>⚡ Flash Sale — Up to 50% Off!</h2>
+        <p>Limited time offer on electronics and fashion. Don't miss out!</p>
+      </div>
+      <button class="offer-btn">Grab the Deal →</button>
+    </div>
+
+    <!-- ======= FEATURES STRIP ======= -->
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🚚</div>
+        <div>
+          <div class="feature-title">Free Delivery</div>
+          <div class="feature-desc">On orders above ₹499</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">↩️</div>
+        <div>
+          <div class="feature-title">Easy Returns</div>
+          <div class="feature-desc">7-day return policy</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <div>
+          <div class="feature-title">Safe Payment</div>
+          <div class="feature-desc">100% secure checkout</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📞</div>
+        <div>
+          <div class="feature-title">24/7 Support</div>
+          <div class="feature-desc">Always here to help</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= FOOTER ======= -->
+    <footer>
+      <p>
+        Made with ❤️ by <span>MyShop</span> &nbsp;|&nbsp; © 2026 All Rights
+        Reserved
+      </p>
+    </footer>
+
+    <!-- ======= CART SIDEBAR ======= -->
+    <!-- Dark background overlay -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+
+    <!-- Cart panel that slides in from the right -->
+    <div class="cart-panel" id="cart-panel">
+      <div class="cart-head">
+        <h3>🛒 Your Cart</h3>
+        <button class="close-btn" onclick="closeCart()">✕</button>
+      </div>
+
+      <!-- Cart items list -->
+      <div class="cart-body" id="cart-body">
+        <div class="cart-empty">
+          <div class="empty-icon">🛒</div>
+          <p>Your cart is empty!</p>
+          <p>Add some products to get started.</p>
+        </div>
+      </div>
+
+      <!-- Total + checkout button -->
+      <div class="cart-foot" id="cart-foot" style="display: none">
+        <div class="cart-total-row">
+          <span>Total:</span>
+          <span id="cart-total">₹0</span>
+        </div>
+        <button
+          class="checkout-btn"
+          onclick="alert('Checkout coming soon! 🎉')"
+        >
+          Proceed to Checkout →
+        </button>
+      </div>
+    </div>
+
+    <!-- ======= TOAST NOTIFICATION ======= -->
+    <div class="toast" id="toast">✅ Added to cart!</div>
+
+    <!-- ======= JAVASCRIPT ======= -->
+    <script>
+      // =====================
+      // PRODUCT DATA
+      // Each product is an object with details
+      // =====================
+      const products = [
+        {
+          id: 1,
+          name: "Smartphone Pro X",
+          img: "download.jpg",
+          price: 12999,
+          oldPrice: 15999,
+          category: "electronics",
+        },
+        {
+          id: 2,
+          name: "Wireless Earbuds",
+          img: "ear.jpg",
+          price: 1999,
+          oldPrice: 2999,
+          category: "electronics",
+        },
+        {
+          id: 3,
+          name: "Laptop 15 inch",
+          img: "selection-223-500x500.webp",
+          price: 45999,
+          oldPrice: 55999,
+          category: "electronics",
+        },
+        {
+          id: 4,
+          name: "Smart Watch",
+          img: "download (1).jpg",
+          price: 3499,
+          oldPrice: 4999,
+          category: "electronics",
+        },
+        {
+          id: 5,
+          name: "Cotton T-Shirt",
+          img: "ts.jpg",
+          price: 499,
+          oldPrice: 799,
+          category: "fashion",
+        },
+        {
+          id: 6,
+          name: "Running Shoes",
+          img: "sho.jpg",
+          price: 1299,
+          oldPrice: 1999,
+          category: "fashion",
+        },
+        {
+          id: 7,
+          name: "Sunglasses",
+          img: "sg.jpg",
+          price: 699,
+          oldPrice: 999,
+          category: "fashion",
+        },
+        {
+          id: 8,
+          name: "Backpack",
+          img: "bg.jpg",
+          price: 899,
+          oldPrice: 1499,
+          category: "fashion",
+        },
+        {
+          id: 9,
+          name: "Table Lamp",
+          img: "th (1).jpg",
+          price: 599,
+          oldPrice: 899,
+          category: "home",
+        },
+        {
+          id: 10,
+          name: "Coffee Mug Set",
+          img: "cp.jpg",
+          price: 349,
+          oldPrice: 499,
+          category: "home",
+        },
+        {
+          id: 11,
+          name: "Plant Pot",
+          img: "th.jpg",
+          price: 249,
+          oldPrice: 399,
+          category: "home",
+        },
+        {
+          id: 12,
+          name: "Pizza Combo",
+          img: "pz.jpg",
+          price: 299,
+          oldPrice: 399,
+          category: "food",
+        },
+      ];
+
+      // =====================
+      // CART ARRAY
+      // Stores items user adds
+      // =====================
+      let cart = [];
+
+      // =====================
+      // SHOW PRODUCTS
+      // This function draws product cards on the page
+      // =====================
+      function showProducts(list) {
+        const grid = document.getElementById("products-grid");
+        grid.innerHTML = ""; // Clear old products
+
+        // Loop through each product and create a card
+        list.forEach(function (product) {
+          const card = document.createElement("div");
+          card.className = "product-card";
+
+          // Build the HTML for each card
+          card.innerHTML = `
+          <div class="product-img">
+            ${
+              product.img
+                ? `<img src="${product.img}" alt="${product.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;">`
+                : product.emoji
+            }
+          </div>
+          <div class="product-info">
+            <div class="product-name">${product.name}</div>
+      <div class="product-price">
+        ₹${product.price.toLocaleString()}
+        <span class="old-price">₹${product.oldPrice.toLocaleString()}</span>
+      </div>
+      <button class="add-btn" onclick="addToCart(${product.id})">
+        Add to Cart 🛒
+      </button>
+    </div>
+  `;
+
+          grid.appendChild(card); // Add card to grid
+        });
+      }
+
+      // Show all products when page loads
+      showProducts(products);
+
+      // =====================
+      // FILTER PRODUCTS
+      // Shows only products of selected category
+      // =====================
+      function filterProducts(category, clickedCard) {
+        // Remove 'active' from all category cards
+        document.querySelectorAll(".category-card").forEach(function (card) {
+          card.classList.remove("active");
+        });
+
+        // Add 'active' to the one that was clicked
+        clickedCard.classList.add("active");
+
+        // Filter products
+        if (category === "all") {
+          showProducts(products); // show everything
+        } else {
+          const filtered = products.filter(function (p) {
+            return p.category === category;
+          });
+          showProducts(filtered);
+        }
+      }
+
+      // =====================
+      // ADD TO CART
+      // Adds a product to the cart array
+      // =====================
+      function addToCart(productId) {
+        // Find the product by id
+        const product = products.find(function (p) {
+          return p.id === productId;
+        });
+
+        // Check if product is already in cart
+        const existing = cart.find(function (item) {
+          return item.id === productId;
+        });
+
+        if (existing) {
+          existing.qty += 1; // increase quantity
+        } else {
+          cart.push({ ...product, qty: 1 }); // add new item
+        }
+
+        // Update everything
+        updateCartCount();
+        updateCartPanel();
+        showToast("✅ " + product.name + " added to cart!");
+      }
+
+      // =====================
+      // UPDATE CART COUNT
+      // Updates the number in the navbar button
+      // =====================
+      function updateCartCount() {
+        const total = cart.reduce(function (sum, item) {
+          return sum + item.qty;
+        }, 0);
+        document.getElementById("cart-count").textContent = total;
+      }
+
+      // =====================
+      // UPDATE CART PANEL
+      // Rebuilds the list of items inside the cart
+      // =====================
+      function updateCartPanel() {
+        const body = document.getElementById("cart-body");
+        const foot = document.getElementById("cart-foot");
+
+        if (cart.length === 0) {
+          // Show empty message
+          body.innerHTML = `
+          <div class="cart-empty">
+            <div class="empty-icon">🛒</div>
+            <p>Your cart is empty!</p>
+            <p>Add some products to get started.</p>
+          </div>
+        `;
+          foot.style.display = "none";
+          return;
+        }
+
+        // Build cart items HTML
+        let html = "";
+        let total = 0;
+
+        cart.forEach(function (item) {
+          total += item.price * item.qty;
+          html += `
+          <div class="cart-item">
+            <div class="cart-item-img">
+              ${
+                item.img
+                  ? `<img src="${item.img}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`
+                  : item.emoji || "🛍️"
+              }
+            </div>
+            <div>
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">₹${item.price.toLocaleString()} × ${item.qty}</div>
+            </div>
+          </div>
+        `;
+        });
+
+        body.innerHTML = html;
+        foot.style.display = "block";
+        document.getElementById("cart-total").textContent =
+          "₹" + total.toLocaleString();
+      }
+
+      // =====================
+      // OPEN & CLOSE CART
+      // =====================
+      function openCart() {
+        document.getElementById("cart-overlay").classList.add("show");
+        document.getElementById("cart-panel").classList.add("show");
+      }
+
+      function closeCart() {
+        document.getElementById("cart-overlay").classList.remove("show");
+        document.getElementById("cart-panel").classList.remove("show");
+      }
+
+      // =====================
+      // TOAST NOTIFICATION
+      // Shows a small popup message
+      // =====================
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        // Hide after 2 seconds
+        setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
